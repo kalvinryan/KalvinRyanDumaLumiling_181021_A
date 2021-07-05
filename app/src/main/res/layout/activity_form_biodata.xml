@@ -26,13 +26,28 @@
                 android:background="@mipmap/ic_launcher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-            <EditText
-                android:hint="STB"
-                android:layout_marginTop="10dp"
-                android:id="@+id/txtNim"
-                android:inputType="text"
+            <LinearLayout
+                android:gravity="bottom"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/txtNim"
+                    android:layout_width="265dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="STB"
+                    android:inputType="text" />
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="1dp"
+                    android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/btn_search"
+                    android:text="Search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
             <EditText
                 android:hint="Nama"
                 android:id="@+id/txtNama"
