@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">KalvinRyanDumaLumiling_181021_A</string>
+    <string name="title_activity_home">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_input">Input</string>
+    <string name="title_daftar">Daftar</string>
+</resources>
