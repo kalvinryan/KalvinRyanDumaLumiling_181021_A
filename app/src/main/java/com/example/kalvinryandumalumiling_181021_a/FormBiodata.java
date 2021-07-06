@@ -95,7 +95,7 @@ public class FormBiodata extends AppCompatActivity {
                 database.onOpen();
                 Mahasiswa mahasiswa= database.getmahasiswa(Stambuk);
                 if (mahasiswa != null){
-                    displayToast("Data Telah Terdaftar!!");
+                    displayToast("Kalvin_Ryan_Duma_Lumiling-181021_A : Data Ditemukan!!");
                     txtNama.setText(mahasiswa.getNama());
                     txtAlamat.setText(mahasiswa.getAlamat());
                     String Jk = mahasiswa.getJkl();
@@ -112,7 +112,7 @@ public class FormBiodata extends AppCompatActivity {
                         pilihan_1.setChecked(true);
                     }
                 }else{
-                    displayToast("Data Kosong!!");
+                    displayToast("Kalvin_Ryan_Duma_Lumiling-181021_A : Data Kosong!!");
                 }
                 database.close();
 
@@ -163,7 +163,7 @@ public class FormBiodata extends AppCompatActivity {
                         Long.parseLong(stb),nama,alamat,jkl,tlp,tmplahir,tglLahir,myhoby
                 );
                 database.close();
-                displayToast("Data Berhasil Di Update!!!!");
+                displayToast("Kalvin_Ryan_Duma_Lumiling-181021_A : Data Berhasil Di Update!!!!");
             }
         });
 

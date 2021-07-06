@@ -16,7 +16,7 @@ public class ViewData extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_data);
         txtData=findViewById(R.id.DataMahasiswa);
-
+        displayToast("Kalvin_Ryan_Duma_Lumiling-181021_A : Data Berhasil Di Tampilkan");
         getAllData();
 
     }
@@ -39,5 +39,8 @@ public class ViewData extends AppCompatActivity {
 
         }while(cursor.moveToNext());
         txtData.setText(Title);
+    }
+    public void displayToast(String toast){
+        Toast.makeText(this, toast, Toast.LENGTH_LONG).show();
     }
 }
