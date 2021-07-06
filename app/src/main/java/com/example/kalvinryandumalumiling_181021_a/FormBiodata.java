@@ -75,6 +75,7 @@ public class FormBiodata extends AppCompatActivity {
         pilihan_4=findViewById(R.id.chk_kumpul);
         pilihan_5=findViewById(R.id.chck_gunung);
         pilihan_6=findViewById(R.id.chk_glow);
+
         btnShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,6 +209,7 @@ public class FormBiodata extends AppCompatActivity {
 
                 database.onOpen();
                 database.insertData(mahasiswa);
+                database.close();
                 txtStb.setText("");
                 txtNama.setText("");
                 rb_P.setChecked(false);
@@ -222,17 +224,7 @@ public class FormBiodata extends AppCompatActivity {
                 pilihan_4.setChecked(false);
                 pilihan_5.setChecked(false);
                 pilihan_6.setChecked(false);
-                database.close();
                 displayToast("Kalvin_Ryan_Duma_Lumiling-181021_A : Success menambahkan data mahasiswa");
-            }
-        });
-        dateFormater = new SimpleDateFormat("dd-MM-yyyy",Locale.US);
-        tvDateResult=(TextView)findViewById(R.id.txtTanggal);
-        btnDatePicker=(EditText) findViewById(R.id.txtTanggal);
-        btnDatePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDateDialog();
             }
         });
 
@@ -265,6 +257,17 @@ public class FormBiodata extends AppCompatActivity {
                 database.close();
             }
         });
+
+        dateFormater = new SimpleDateFormat("dd-MM-yyyy",Locale.US);
+        tvDateResult=(TextView)findViewById(R.id.txtTanggal);
+        btnDatePicker=(EditText) findViewById(R.id.txtTanggal);
+        btnDatePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDateDialog();
+            }
+        });
+
     }
 
     public void displayToast(String toast){
