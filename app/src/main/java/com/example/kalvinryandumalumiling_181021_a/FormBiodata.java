@@ -27,9 +27,10 @@ public class FormBiodata extends AppCompatActivity {
     private SimpleDateFormat dateFormater;
     private TextView tvDateResult;
     private EditText btnDatePicker;
-    EditText txtStb,txtNama,txtAlamat,txtTmpLahir;
-    Button btnDaftar;
+    EditText txtStb,txtNama,txtAlamat,txtTlp,txtTmpLahir,txtTgglLahir;
+    Button btnDaftar,btnEdit,btnShow,btnSearch,btnDelete;
     RadioGroup jenisKelamin;
+    RadioButton rb_L,rb_P;
     CheckBox pilihan_1,pilihan_2,pilihan_3,pilihan_4,pilihan_5,pilihan_6;
 
 
@@ -46,6 +47,7 @@ public class FormBiodata extends AppCompatActivity {
         },newCalender.get(Calendar.YEAR),newCalender.get(Calendar.MONTH),newCalender.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +55,19 @@ public class FormBiodata extends AppCompatActivity {
         dateFormater = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         tvDateResult = (TextView) findViewById(R.id.txtTanggal);
         btnDatePicker=(EditText) findViewById(R.id.txtTanggal);
-
+        btnSearch = (Button)findViewById(R.id.btn_search);
+        btnEdit = (Button)findViewById(R.id.btnEdit);
+        btnShow = (Button)findViewById(R.id.btnShow);
         btnDaftar=(Button)findViewById(R.id.btnDaftar);
+        btnDelete = (Button)findViewById(R.id.btnDelete);
+        rb_L = (RadioButton)findViewById(R.id.radiobtn_L);
+        rb_P = (RadioButton)findViewById(R.id.radiobtn_P);
         txtStb = findViewById(R.id.txtNim);
         txtNama = findViewById(R.id.txtNama);
         txtAlamat = findViewById(R.id.txtAlamat);
+        txtTlp = findViewById(R.id.txtTlp);
         txtTmpLahir = findViewById(R.id.txt_tempatLahir);
+        txtTgglLahir = findViewById(R.id.txtTanggal);
         jenisKelamin = findViewById(R.id.jk);
         pilihan_1=findViewById(R.id.chk_membaca);
         pilihan_2=findViewById(R.id.chk_games);
@@ -66,6 +75,96 @@ public class FormBiodata extends AppCompatActivity {
         pilihan_4=findViewById(R.id.chk_kumpul);
         pilihan_5=findViewById(R.id.chck_gunung);
         pilihan_6=findViewById(R.id.chk_glow);
+        btnShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FormBiodata.this,ViewData.class);
+                startActivity(intent);
+            }
+        });
+
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Database database = new Database(getApplicationContext(),null,null,1);
+
+                String Stambuk;
+
+                Stambuk= txtStb.getText().toString();
+                database.onOpen();
+                Mahasiswa mahasiswa= database.getmahasiswa(Stambuk);
+                if (mahasiswa != null){
+                    displayToast("Data Telah Terdaftar!!");
+                    txtNama.setText(mahasiswa.getNama());
+                    txtAlamat.setText(mahasiswa.getAlamat());
+                    String Jk = mahasiswa.getJkl();
+                    if (Jk.equals("Laki laki")){
+                        rb_L.setChecked(true);
+                    }else{
+                        rb_P.setChecked(true);
+                    }
+                    txtTlp.setText(mahasiswa.getTlp());
+                    txtTmpLahir.setText(mahasiswa.getTmplahir());
+                    txtTgglLahir.setText(mahasiswa.getTgllahir());
+                    String hoby=mahasiswa.getHoby();
+                    if (hoby.equals("Membaca")){
+                        pilihan_1.setChecked(true);
+                    }
+                }else{
+                    displayToast("Data Kosong!!");
+                }
+                database.close();
+
+            }
+        });
+
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Database database = new Database(getApplicationContext(),null,null,1);
+                String stb = txtStb.getText().toString();
+                String nama = txtNama.getText().toString();
+                String alamat = txtAlamat.getText().toString();
+                String tlp = txtTlp.getText().toString();
+                String tmplahir = txtTmpLahir.getText().toString();
+                String tglLahir = String.valueOf(tvDateResult.getText().toString());
+
+                int yourGender = jenisKelamin.getCheckedRadioButtonId();
+                RadioButton jk =(RadioButton) findViewById(yourGender);
+                String jkl=String.valueOf(jk.getText().toString());
+                String myhoby="";
+                if(pilihan_1.isChecked()){
+                    myhoby += pilihan_1.getText().toString();
+                }
+
+                if(pilihan_2.isChecked()){
+                    myhoby +=pilihan_2.getText().toString();
+                }
+
+                if(pilihan_3.isChecked()){
+                    myhoby +=pilihan_3.getText().toString();
+                }
+
+                if(pilihan_4.isChecked()){
+                    myhoby +=pilihan_4.getText().toString();
+                }
+
+                if(pilihan_5.isChecked()){
+                    myhoby +=pilihan_5.getText().toString();
+                }
+
+                if(pilihan_6.isChecked()){
+                    myhoby +=pilihan_6.getText().toString();
+                }
+
+                database.onOpen();
+                database.updateMahasiswa(
+                        Long.parseLong(stb),nama,alamat,jkl,tlp,tmplahir,tglLahir,myhoby
+                );
+                database.close();
+                displayToast("Data Berhasil Di Update!!!!");
+            }
+        });
 
         btnDaftar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,13 +173,9 @@ public class FormBiodata extends AppCompatActivity {
                 String stb = txtStb.getText().toString();
                 String nama = txtNama.getText().toString();
                 String alamat = txtAlamat.getText().toString();
-                String tlp = txtTmpLahir.getText().toString();
+                String tlp = txtTlp.getText().toString();
                 String tmplahir = txtTmpLahir.getText().toString();
                 String tglLahir = String.valueOf(tvDateResult.getText().toString());
-
-
-                String baca,game,sepeda,kumpul,gunung,glowupp;
-
 
                 int yourGender = jenisKelamin.getCheckedRadioButtonId();
                 RadioButton jk =(RadioButton) findViewById(yourGender);
@@ -113,10 +208,22 @@ public class FormBiodata extends AppCompatActivity {
 
                 database.onOpen();
                 database.insertData(mahasiswa);
+                txtStb.setText("");
+                txtNama.setText("");
+                rb_P.setChecked(false);
+                rb_L.setChecked(false);
+                txtAlamat.setText("");
+                txtTlp.setText("");
+                txtTmpLahir.setText("");
+                txtTgglLahir.setText("");
+                pilihan_1.setChecked(false);
+                pilihan_2.setChecked(false);
+                pilihan_3.setChecked(false);
+                pilihan_4.setChecked(false);
+                pilihan_5.setChecked(false);
+                pilihan_6.setChecked(false);
                 database.close();
                 displayToast("Kalvin_Ryan_Duma_Lumiling-181021_A : Success menambahkan data mahasiswa");
-
-
             }
         });
         dateFormater = new SimpleDateFormat("dd-MM-yyyy",Locale.US);
@@ -126,6 +233,36 @@ public class FormBiodata extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showDateDialog();
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Database database = new Database(getApplicationContext(),null,null,1);
+                String stb = txtStb.getText().toString();
+                database.onOpen();
+                boolean result = database.deleteMahasiswa(stb);
+                if (result){
+                    displayToast("Data berhasil Dihapus!!");
+                    txtStb.setText("");
+                    txtNama.setText("");
+                    rb_P.setChecked(false);
+                    rb_L.setChecked(false);
+                    txtAlamat.setText("");
+                    txtTlp.setText("");
+                    txtTmpLahir.setText("");
+                    txtTgglLahir.setText("");
+                    pilihan_1.setChecked(false);
+                    pilihan_2.setChecked(false);
+                    pilihan_3.setChecked(false);
+                    pilihan_4.setChecked(false);
+                    pilihan_5.setChecked(false);
+                    pilihan_6.setChecked(false);
+                }else{
+                    displayToast("Data Tidak Bisa Dihapus!!!");
+                }
+                database.close();
             }
         });
     }

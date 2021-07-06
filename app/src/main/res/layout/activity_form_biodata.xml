@@ -26,28 +26,33 @@
                 android:background="@mipmap/ic_launcher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+
             <LinearLayout
-                android:gravity="bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="bottom"
                 android:orientation="horizontal">
+
                 <EditText
                     android:id="@+id/txtNim"
-                    android:layout_width="265dp"
+                    android:layout_width="260dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:hint="STB"
                     android:inputType="text" />
+
                 <RelativeLayout
-                    android:layout_weight="1"
                     android:layout_width="1dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
+
                 <Button
                     android:id="@+id/btn_search"
-                    android:text="Search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_baseline_person_search_24"
+                    android:text="" />
             </LinearLayout>
+
             <EditText
                 android:hint="Nama"
                 android:id="@+id/txtNama"
@@ -80,10 +85,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <RadioButton
+                        android:id="@+id/radiobtn_L"
                         android:text="Laki laki"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <RadioButton
+                        android:id="@+id/radiobtn_P"
                         android:text="Perempuan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -163,16 +170,45 @@
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
-                android:paddingRight="10dp"
-                android:gravity="right"
+                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btnEdit"
+                    android:text="Edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <RelativeLayout
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/btnShow"
+                    android:text="Show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <RelativeLayout
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content"/>
                 <Button
                     android:id="@+id/btnDaftar"
                     android:text="Daftar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+
             </LinearLayout>
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <Button
+                    android:id="@+id/btnDelete"
+                    android:text="Delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

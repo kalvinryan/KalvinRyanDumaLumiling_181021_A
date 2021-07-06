@@ -2,6 +2,7 @@ package com.example.kalvinryandumalumiling_181021_a.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -69,8 +70,58 @@ public class Database extends SQLiteOpenHelper {
         contentValues.put(Column_9,mahasiswa.getHoby());
 
         db.insert(Tabel_name,null,contentValues);
-
     }
 
+    public Cursor getAllMahasiswa(){
+        Cursor cursor = db.query(Tabel_name,new String[]{Column_2,Column_3,Column_4,Column_5,Column_6,Column_7,Column_8,Column_9},null,null,null,null,null);
+        return cursor;
+    }
 
+    public Mahasiswa getmahasiswa(String stambuk){
+        String query = "SELECT * FROM " + Tabel_name + " WHERE " + Column_2 + "=\"" + stambuk + "\"";
+        Cursor cursor = db.rawQuery(query,null);
+        Mahasiswa mahasiswa = new Mahasiswa();
+        if(cursor.moveToFirst()){
+            cursor.moveToFirst();
+            mahasiswa.setStb(cursor.getString(1));
+            mahasiswa.setNama(cursor.getString(2));
+            mahasiswa.setAlamat(cursor.getString(3));
+            mahasiswa.setJkl(cursor.getString(4));
+            mahasiswa.setTlp(cursor.getString(5));
+            mahasiswa.setTmplahir(cursor.getString(6));
+            mahasiswa.setTgllahir(cursor.getString(7));
+            mahasiswa.setHoby(cursor.getString(8));
+        }
+        else {
+            mahasiswa = null;
+        }
+        return mahasiswa;
+    }
+
+    public boolean updateMahasiswa(long Stambuk,String newName,String newAlamat,String newJKL,String newTLP,String newTMPLAHIR
+    ,String newTGLLAhir,String newHoby){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Column_3,newName);
+        contentValues.put(Column_4,newAlamat);
+        contentValues.put(Column_5,newJKL);
+        contentValues.put(Column_6,newTLP);
+        contentValues.put(Column_7,newTMPLAHIR);
+        contentValues.put(Column_8,newTGLLAhir);
+        contentValues.put(Column_9,newHoby);
+        return db.update(Tabel_name,contentValues,Column_2 + " = " + Stambuk,null)>0;
+    }
+
+    public boolean deleteMahasiswa(String Stambuk){
+        boolean result =false;
+        String query = "SELECT * FROM "+Tabel_name+" WHERE "+Column_2+" = \""+ Stambuk +"\"";
+        Cursor cursor = db.rawQuery(query,null);
+        Mahasiswa mahasiswa = new Mahasiswa();
+        if (cursor.moveToFirst()){
+            mahasiswa.setStb(cursor.getString(1));
+            db.delete(Tabel_name,Column_2+" = ?",new String[]{mahasiswa.getStb()});
+            cursor.close();
+            result =true;
+        }
+        return result;
+    }
 }
